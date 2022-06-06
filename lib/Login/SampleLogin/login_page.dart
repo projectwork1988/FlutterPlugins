@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
+
+import '../../Account/presentation/account_page.dart';
+import 'app_color.dart';
 //import 'HomePage.dart';
+import 'package:get/get.dart';
+
+import 'login_controller.dart';
 
 void main() {
   runApp(MyApp());
@@ -28,7 +34,10 @@ Widget _buildLoadingCircularProgress() {
       child: CircularProgressIndicator(color: AppColor.primaryColor));
 }
 
+
 class _LoginDemoState extends State<LoginDemo> {
+  final loginController = /*Get.find<LoginController>();*/ LoginController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +57,7 @@ class _LoginDemoState extends State<LoginDemo> {
                     /*decoration: BoxDecoration(
                         color: Colors.red,
                         borderRadius: BorderRadius.circular(50.0)),*/
-                    child: Image.asset('asset/images/flutter-logo.png')),
+                    child: Image.asset('assets/images/login/loginLogo.jpg')),
               ),
             ),
             Padding(
@@ -74,7 +83,10 @@ class _LoginDemoState extends State<LoginDemo> {
                     hintText: 'Enter secure password'),
               ),
             ),
-            FlatButton(
+            SizedBox(
+              height: 5,
+            ),
+            /*FlatButton(
               onPressed: (){
                 //TODO FORGOT PASSWORD SCREEN GOES HERE
               },
@@ -82,25 +94,59 @@ class _LoginDemoState extends State<LoginDemo> {
                 'Forgot Password',
                 style: TextStyle(color: Colors.blue, fontSize: 15),
               ),
+            ),*/
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: const TextStyle(fontSize: 20),
+              ),
+              onPressed: (){
+                //TODO FORGOT PASSWORD SCREEN GOES HERE
+              },
+              child: const Text('Forgot Password'),
             ),
-            Container(
+            SizedBox(
+              height: 10,
+            ),
+            ElevatedButton(
+                key: const Key('loginSubmitForm'),
+                style: ButtonStyle(
+                    foregroundColor: MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) => Colors.white),
+                    backgroundColor: MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) => AppColor.primaryColor),
+                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        side: const BorderSide(width: 0, color: AppColor.primaryColor)
+                    ))
+                ),
+                child: const Text(/*AppLocalizations.of(context).signIn*/"Sign In",
+                    style: TextStyle(fontSize: 18, color: Colors.white)
+                ),
+                onPressed: () {
+                  if(loginController.handleLoginPressed()) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const SecondRoute()),
+                    );
+                  }
+                }
+            ),
+            /*Container(
               height: 50,
               width: 250,
               decoration: BoxDecoration(
                   color: Colors.blue, borderRadius: BorderRadius.circular(20)),
               child: FlatButton(
                 onPressed: () {
-                  /*avigator.push(
-                      context, MaterialPageRoute(builder: (_) => HomePage()));*/
+                  *//*avigator.push(
+                      context, MaterialPageRoute(builder: (_) => HomePage()));*//*
                 },
                 child: Text(
                   'Login',
                   style: TextStyle(color: Colors.white, fontSize: 25),
                 ),
               ),
-            ),
+            ),*/
             SizedBox(
-              height: 130,
+              height: 80,
             ),
             Text('New User? Create Account')
           ],
